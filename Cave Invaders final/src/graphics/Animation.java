@@ -1,8 +1,8 @@
-package world;
+package graphics;
 
 import java.awt.image.BufferedImage;
 
-public class Animation {
+public class Animation extends Renderable{
 
 	BufferedImage[] images;
 	int[] ticks;

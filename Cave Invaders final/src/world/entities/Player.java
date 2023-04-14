@@ -10,17 +10,18 @@ import com.studiohartman.jamepad.ControllerState;
 
 import game.Game;
 import geometry.Vector;
+import input.devices.InputDevice;
 import world.World;
 
 public class Player extends Entity {
 
 	boolean sliding;
 
-	int keyCodeRight, keyCodeUp, keyCodeLeft, keyCodeDown;
-
 	BufferedImage buff;
 
-	public Player(int x, int y, int width, int height) {
+	InputDevice input;
+
+	public Player(int x, int y, int width, int height, InputDevice input) {
 		p = new Vector(x, y);
 
 		v = new Vector(0, 0);
@@ -35,6 +36,9 @@ public class Player extends Entity {
 		g.fillRect(0, 0, width, height);
 
 		g.dispose();
+
+		this.input = input;
+		this.solid = true;
 	}
 
 	@Override
@@ -43,67 +47,17 @@ public class Player extends Entity {
 	}
 
 	public void move(World world) {
-		stopVelocity();
-		if (!sliding) {
-			stopAcceleration();
-		}
-
-		ControllerState s = Game.input.getControllerState(0);
-		v = new Vector(Math.round(s.leftStickX*1000), -Math.round(s.leftStickY*1000));
-		
-		if (Game.isKeyDown(keyCodeRight)) {
-			addVelocity(1, 0);
-		}
-
-		if (Game.isKeyDown(keyCodeUp)) {
-			addVelocity(0, -1);
-		}
-
-		if (Game.isKeyDown(keyCodeLeft)) {
-			addVelocity(-1, 0);
-		}
-
-		if (Game.isKeyDown(keyCodeDown)) {
-			addVelocity(0, 1);
-		}
-		
+		if (input != null)
+			v = input.getInputDirection();
 
 		if (!v.equals(new Vector(0, 0)))
-			v = Vector.mult(Vector.norm(v), 20);
+			v = Vector.mult(Vector.norm(v), 10);
 
 		super.move(world);
 	}
 
-	public int getKeyCodeRight() {
-		return keyCodeRight;
-	}
-
-	public void setKeyCodeRight(int keyCodeRight) {
-		this.keyCodeRight = keyCodeRight;
-	}
-
-	public int getKeyCodeUp() {
-		return keyCodeUp;
-	}
-
-	public void setKeyCodeUp(int keyCodeUp) {
-		this.keyCodeUp = keyCodeUp;
-	}
-
-	public int getKeyCodeLeft() {
-		return keyCodeLeft;
-	}
-
-	public void setKeyCodeLeft(int keyCodeLeft) {
-		this.keyCodeLeft = keyCodeLeft;
-	}
-
-	public int getKeyCodeDown() {
-		return keyCodeDown;
-	}
-
-	public void setKeyCodeDown(int keyCodeDown) {
-		this.keyCodeDown = keyCodeDown;
+	public InputDevice getInputDevice() {
+		return input;
 	}
 
 	@Override
