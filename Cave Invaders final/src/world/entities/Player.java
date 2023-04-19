@@ -69,7 +69,7 @@ public class Player extends Entity {
 		
 
 		if (!v.equals(new Vector(0, 0)))
-			v = Vector.mult(Vector.norm(v), 20);
+			v = Vector.mult(Vector.norm(v), 1);
 
 		super.move(world);
 	}
