@@ -9,4 +9,5 @@ public abstract class Renderable {
 	}
 	
 	public abstract void draw(Graphics g);
+	public abstract void tick();
 }

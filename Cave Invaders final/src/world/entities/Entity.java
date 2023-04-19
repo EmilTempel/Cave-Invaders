@@ -70,7 +70,8 @@ public abstract class Entity extends PhysicsObject {
 	};
 
 	public void tick(World world) {
-		
+		System.out.println("tick");
+		renderable.tick();
 	}
 
 	

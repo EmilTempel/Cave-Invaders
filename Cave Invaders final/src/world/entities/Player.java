@@ -6,18 +6,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.studiohartman.jamepad.ControllerState;
-
-import game.Game;
 import geometry.Vector;
+import graphics.Animation;
+import graphics.loader.ImageLoader;
 import input.devices.InputDevice;
 import world.World;
 
 public class Player extends Entity {
 
 	boolean sliding;
-
-	BufferedImage buff;
 
 	InputDevice input;
 
@@ -29,13 +26,12 @@ public class Player extends Entity {
 
 		setDimension(width, height);
 
-		buff = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
-
-		Graphics g = buff.createGraphics();
-
-		g.fillRect(0, 0, width, height);
-
-		g.dispose();
+		BufferedImage[] animation = ImageLoader.loadSpriteSheet("res/HandMonster.png", 64, 64, 32);
+		int[] ticks = new int[animation.length];
+		for(int i = 0; i < ticks.length; i++) {
+			ticks[i] = 2;
+		}
+		renderable = new Animation(animation, ticks);
 
 		this.input = input;
 		this.solid = true;
@@ -43,7 +39,7 @@ public class Player extends Entity {
 
 	@Override
 	public void tick(World world) {
-
+		super.tick(world);
 	}
 
 	public void move(World world) {
@@ -51,7 +47,7 @@ public class Player extends Entity {
 			v = input.getInputDirection();
 
 		if (!v.equals(new Vector(0, 0)))
-			v = Vector.mult(Vector.norm(v), 10);
+			v = Vector.mult(Vector.norm(v), 3);
 
 		super.move(world);
 	}
@@ -62,7 +58,7 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(buff, -width() / 2, -height() / 2, width(), height(), null);
+		super.draw(g);
 		g.setColor(Color.BLUE);
 		((Graphics2D) g).setStroke(new BasicStroke(3));
 		g.drawLine(0, 0, (int) v.x(), (int) v.y());

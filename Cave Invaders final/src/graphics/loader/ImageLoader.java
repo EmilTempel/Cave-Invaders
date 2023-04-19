@@ -33,9 +33,12 @@ public class ImageLoader {
 			BufferedImage src = load(path);
 			int width = src.getWidth()/spriteWidth, height = src.getHeight()/spriteHeight;
 			BufferedImage[] erg = new BufferedImage[count];
-			for(int j = 0; j < height; j++) {
+			A: for(int j = 0; j < height; j++) {
 				for(int i = 0; i < width; i++) {
 					int idx = j*width + i;
+					if(idx >= count) {
+						break A;
+					}
 					erg[idx] = src.getSubimage(i*spriteWidth, j*spriteHeight, spriteWidth, spriteHeight);
 				}
 			}
