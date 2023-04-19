@@ -6,7 +6,7 @@ import world.generators.wavefunctioncollapse.SuperPosable;
 
 public interface Tile{
 
-	public static final int size = 256;
+	public static final int size = 64;
 
 	public abstract void tick();
 	

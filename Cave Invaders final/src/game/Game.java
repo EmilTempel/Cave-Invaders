@@ -44,8 +44,6 @@ public class Game extends JFrame {
 			if (System.nanoTime() - nanos >= timeStep) {
 				state.update();
 				nanos += timeStep;
-				
-				
 			}
 			
 			do {

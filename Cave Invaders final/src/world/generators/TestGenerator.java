@@ -30,7 +30,14 @@ public class TestGenerator extends WorldGenerator{
 		
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 20; j++) {
-				scene.set(i, j, (SimpleTile) w.get(i, j), 0);
+				SimpleTile tile = (SimpleTile) w.get(i, j);
+				if(tile == SimpleTile.Wall && j+1 < 20 &&(SimpleTile) w.get(i, j+1) != SimpleTile.Floor) {
+					tile = SimpleTile.Void;
+				}
+				if(tile == SimpleTile.Wall && j-1 >= 0 && (SimpleTile) w.get(i, j-1) == SimpleTile.Floor) {
+					tile = SimpleTile.Floor;
+				}
+				scene.set(i, j, tile, 0);
 			}
 		}
 		

@@ -11,6 +11,8 @@ import world.entities.Entity;
 import world.tiles.Tile;
 
 public class Scene {
+	
+	static int FLOOR_LAYER = 0, ENTITY_LAYER = 1, WALL_LAYER = 2;
 
 	TreeMap<Integer, TileEntityMap> mapLayered;
 

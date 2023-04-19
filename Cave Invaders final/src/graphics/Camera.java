@@ -66,12 +66,12 @@ public class Camera extends PhysicsObject {
 			}
 		}
 
-		for (int[] indeces : loaded) {
-			Graphics translated = translate(graphics, indeces[0] * Tile.size, indeces[1] * Tile.size);
-
-			translated.drawRect(-Tile.size / 2, -Tile.size / 2, Tile.size, Tile.size);
-			translated.dispose();
-		}
+//		for (int[] indeces : loaded) {
+//			Graphics translated = translate(graphics, indeces[0] * Tile.size, indeces[1] * Tile.size);
+//
+//			translated.drawRect(-Tile.size / 2, -Tile.size / 2, Tile.size, Tile.size);
+//			translated.dispose();
+//		}
 
 		graphics.dispose();
 

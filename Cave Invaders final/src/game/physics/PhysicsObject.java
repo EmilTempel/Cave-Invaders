@@ -12,8 +12,6 @@ public abstract class PhysicsObject {
 
 	protected Vector p, s, v, a;
 
-	private TreeMap<Double, RectangleCollider> collisionMap;
-
 	public PhysicsObject(int x, int y, int w, int h) {
 		setPosition(x, y);
 		setDimension(w, h);
@@ -128,13 +126,6 @@ public abstract class PhysicsObject {
 		return false;
 	}
 
-	public void addCollision(double t, RectangleCollider collider) {
-		if (collisionMap == null) {
-			collisionMap = new TreeMap<>();
-		}
-		collisionMap.put(t, collider);
-	}
-
 	public void collide(PhysicsObject o) {
 		collide(new RectangleCollider(o.p, o.s));
 	}
@@ -169,67 +160,6 @@ public abstract class PhysicsObject {
 
 				v = Vector.operate(v, normal, (a, b) -> a - (1 - t) * Math.abs(a) * b);
 			}
-		}
-
-//		if (!(tNear[0] > tFar[1] || tNear[1] > tFar[0])) {
-//
-//			int index = Functions.max_index(tNear);
-//			double t = tNear[index];
-//			if (Functions.min(tFar) >= 0) {
-//				direction[1 - index] = 0;
-//				Vector normal = new Vector(direction);
-//
-//				addCollision(t, collider);
-//			}
-//		}
-		
-//		double t = Functions.max(tFar);
-//		if (t >= 0)
-//			addCollision(t, collider);
-	}
-
-	public void resolveCollision(RectangleCollider collider) {
-		Vector length = Vector.add(collider.s, s);
-		double[] tNear = new double[2], tFar = new double[2];
-		double[] direction = { 1, 1 };
-
-		for (int i = 0; i < 2; i++) {
-			tNear[i] = (collider.p.x(i) - length.x(i) / 2 - p.x(i)) / v.x(i);
-			tFar[i] = (collider.p.x(i) + length.x(i) / 2 - p.x(i)) / v.x(i);
-
-			if (tNear[i] > tFar[i]) {
-				double temp = tNear[i];
-				tNear[i] = tFar[i];
-				tFar[i] = temp;
-				direction[i] *= -1;
-			}
-		}
-		if(tNear[0] == Double.NaN || tNear[1] == Double.NaN) return;
-		if(tFar[0] == Double.NaN || tFar[1] == Double.NaN) return;
-		
-		if (tNear[0] < tFar[1] && tNear[1] < tFar[0]) {
-
-			int index = Functions.max_index(tNear);
-			double t = tNear[index];
-			if (t >= 0 && t <= 1) {
-				direction[1 - index] = 0;
-				Vector normal = new Vector(direction);
-				System.out.println(t);
-				v = Vector.operate(v, normal, (a, b) -> a - (1 - t) * Math.abs(a) * b);
-			}
-		}
-	}
-
-	public void resolveCollisions() {
-		if (collisionMap != null) {
-			Iterator<Entry<Double, RectangleCollider>> i = collisionMap.entrySet().iterator();
-			System.out.println(collisionMap.keySet());
-			while (i.hasNext()) {
-				Entry<Double, RectangleCollider> e = i.next();
-				
-				resolveCollision(e.getValue());
-			}
-			collisionMap = null;
 		}
 	}
 }
