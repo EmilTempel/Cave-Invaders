@@ -29,7 +29,7 @@ public class Player extends Entity {
 		BufferedImage[] animation = ImageLoader.loadSpriteSheet("res/HandMonster.png", 64, 64, 32);
 		int[] ticks = new int[animation.length];
 		for(int i = 0; i < ticks.length; i++) {
-			ticks[i] = 2;
+			ticks[i] = 5;
 		}
 		renderable = new Animation(animation, ticks);
 

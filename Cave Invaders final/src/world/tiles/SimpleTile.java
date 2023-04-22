@@ -9,7 +9,7 @@ import graphics.loader.ImageLoader;
 
 public enum SimpleTile implements Tile {
 
-	Void(true), Wall(true), Floor(false);
+	Void(true), Wall(true), Floor(false), Roof(true);
 
 	boolean solid;
 

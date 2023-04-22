@@ -16,10 +16,11 @@ public class TestGenerator extends WorldGenerator{
 		World world = new World(60);
 		Scene scene = new Scene(20, 20);
 
-		ConnectionConstraints c = new ConnectionConstraints(20,20,SimpleTile.values(), new Object[][] {
-			{SimpleTile.Void, SimpleTile.Floor}, //SimpleTile.Void 
-			{SimpleTile.Void,SimpleTile.Floor, SimpleTile.Wall},  //SimpleTile.Wall
-			{SimpleTile.Wall, SimpleTile.Floor}  //SimpleTile.Floor
+		ConnectionConstraints c = new ConnectionConstraints(20,20,new SimpleTile[] {SimpleTile.Roof, SimpleTile.Wall, SimpleTile.Floor}, new Object[][] {
+			{SimpleTile.Roof, SimpleTile.Floor}, //SimpleTile.Roof 
+			{SimpleTile.Roof,SimpleTile.Floor, SimpleTile.Wall},  //SimpleTile.Wall
+			{SimpleTile.Roof, SimpleTile.Wall, SimpleTile.Floor},  //SimpleTile.Floor
+			
 		});
 		
 		Random r = new Random();
@@ -32,9 +33,12 @@ public class TestGenerator extends WorldGenerator{
 			for (int j = 0; j < 20; j++) {
 				SimpleTile tile = (SimpleTile) w.get(i, j);
 				if(tile == SimpleTile.Wall && j+1 < 20 &&(SimpleTile) w.get(i, j+1) != SimpleTile.Floor) {
-					tile = SimpleTile.Void;
+					tile = SimpleTile.Roof;
 				}
 				if(tile == SimpleTile.Wall && j-1 >= 0 && (SimpleTile) w.get(i, j-1) == SimpleTile.Floor) {
+					tile = SimpleTile.Floor;
+				}
+				if(tile == SimpleTile.Roof && j-1 >= 0 && (SimpleTile) w.get(i, j+1) == SimpleTile.Floor) {
 					tile = SimpleTile.Floor;
 				}
 				scene.set(i, j, tile, 0);

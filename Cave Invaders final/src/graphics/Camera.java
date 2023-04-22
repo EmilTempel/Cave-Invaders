@@ -27,10 +27,12 @@ public class Camera extends PhysicsObject {
 	public static final GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
 
 	public static ArrayList<int[]> loaded = new ArrayList<>();
+	
+	private int zoom;
 
-	public Camera(int x, int y, int w, int h) {
+	public Camera(int x, int y, int w, int h, int zoom) {
 		super(x, y, w, h);
-
+		this.zoom = zoom;
 	}
 
 	public Camera() {
@@ -89,79 +91,79 @@ public class Camera extends PhysicsObject {
 		return g2;
 	}
 
-	public static void main(String[] args) {
-
-		Scene scene = new Scene(400, 400);
-
-		for (int i = 0; i < 400; i++) {
-			for (int j = 0; j < 400; j++) {
-				for (int l = 0; l < 1; l++)
-					scene.set(i, j, SimpleTile.values()[(int) (2 * Math.random())], l);
-
-			}
-		}
-
-		Camera c = new Camera(0, 0, 1920, 1080);
-
-		JFrame f = new JFrame();
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1920, 1080);
-
-		f.createBufferStrategy(2);
-
-		Listener input = new Listener();
-
-		int speed = 10;
-
-		f.addKeyListener(input);
-
-		BufferStrategy buff = f.getBufferStrategy();
-
-		long nanos = System.nanoTime(), fpsNanos = System.nanoTime();
-		int counter = 0;
-
-		double timeStep = 1E9 / 60;
-
-		while (true) {
-
-			while (System.nanoTime() - nanos >= timeStep) {
-				if (input.isKeyDown(KeyEvent.VK_W)) {
-					c.setY(c.getY() - speed);
-				}
-				if (input.isKeyDown(KeyEvent.VK_S)) {
-					c.setY(c.getY() + speed);
-				}
-				if (input.isKeyDown(KeyEvent.VK_A)) {
-					c.setX(c.getX() - speed);
-				}
-				if (input.isKeyDown(KeyEvent.VK_D)) {
-					c.setX(c.getX() + speed);
-				}
-
-				nanos += timeStep;
-			}
-
-			do {
-				Graphics g = buff.getDrawGraphics();
-
-				g.drawImage(c.render(scene), 0, 0, 1920, 1080, null);
-
-				g.dispose();
-
-			} while (buff.contentsRestored());
-
-			buff.show();
-
-			counter++;
-
-			if (System.nanoTime() - fpsNanos >= 1E9) {
-				f.setTitle(counter + "FPS");
-
-				counter = 0;
-
-				fpsNanos += 1E9;
-			}
-		}
-	}
+//	public static void main(String[] args) {
+//
+//		Scene scene = new Scene(400, 400);
+//
+//		for (int i = 0; i < 400; i++) {
+//			for (int j = 0; j < 400; j++) {
+//				for (int l = 0; l < 1; l++)
+//					scene.set(i, j, SimpleTile.values()[(int) (2 * Math.random())], l);
+//
+//			}
+//		}
+//
+//		Camera c = new Camera(0, 0, 1920, 1080);
+//
+//		JFrame f = new JFrame();
+//		f.setVisible(true);
+//		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		f.setSize(1920, 1080);
+//
+//		f.createBufferStrategy(2);
+//
+//		Listener input = new Listener();
+//
+//		int speed = 10;
+//
+//		f.addKeyListener(input);
+//
+//		BufferStrategy buff = f.getBufferStrategy();
+//
+//		long nanos = System.nanoTime(), fpsNanos = System.nanoTime();
+//		int counter = 0;
+//
+//		double timeStep = 1E9 / 60;
+//
+//		while (true) {
+//
+//			while (System.nanoTime() - nanos >= timeStep) {
+//				if (input.isKeyDown(KeyEvent.VK_W)) {
+//					c.setY(c.getY() - speed);
+//				}
+//				if (input.isKeyDown(KeyEvent.VK_S)) {
+//					c.setY(c.getY() + speed);
+//				}
+//				if (input.isKeyDown(KeyEvent.VK_A)) {
+//					c.setX(c.getX() - speed);
+//				}
+//				if (input.isKeyDown(KeyEvent.VK_D)) {
+//					c.setX(c.getX() + speed);
+//				}
+//
+//				nanos += timeStep;
+//			}
+//
+//			do {
+//				Graphics g = buff.getDrawGraphics();
+//
+//				g.drawImage(c.render(scene), 0, 0, 1920, 1080, null);
+//
+//				g.dispose();
+//
+//			} while (buff.contentsRestored());
+//
+//			buff.show();
+//
+//			counter++;
+//
+//			if (System.nanoTime() - fpsNanos >= 1E9) {
+//				f.setTitle(counter + "FPS");
+//
+//				counter = 0;
+//
+//				fpsNanos += 1E9;
+//			}
+//		}
+//	}
 }
